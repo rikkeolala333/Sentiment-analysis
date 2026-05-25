@@ -1,0 +1,56 @@
+---
+title: "Sentiment Analysis of Pride and Prejudice"
+author: "Rikke"
+output: html_document
+---
+
+# Introduction
+
+This project explores sentiment patterns in Pride and Prejudice by Jane Austen using sentiment analysis in R.
+
+# Libraries
+
+```{r}
+library(tidyverse)
+library(tidytext)
+library(janeaustenr)
+```
+
+# Load Text
+
+
+
+
+
+```{r}
+book <- austen_books() %>%
+  filter(book == "Pride & Prejudice")
+```
+# Tokenization
+
+```{r}
+tidy_book <- book %>%
+  unnest_tokens(word, text)
+```
+
+# Sentiment Analysis
+
+```{r}
+sentiment_data <- tidy_book %>%
+  inner_join(get_sentiments("bing"))
+```
+
+# Count Sentiment
+
+```{r}
+sentiment_counts <- sentiment_data %>%
+  count(sentiment)
+```
+
+# Visualisation
+
+```{r}
+ggplot(sentiment_counts,
+       aes(x = sentiment, y = n)) +
+  geom_col()
+```
